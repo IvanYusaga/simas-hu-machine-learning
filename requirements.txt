@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+sentence-transformers
+rank-bm25
+pyahocorasick
+torch
+numpy
