@@ -1,7 +1,14 @@
 from sentence_transformers import SentenceTransformer, util
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from rank_bm25 import BM25Okapi
 import ahocorasick
 import numpy as np
+
+# ===== STOPWORD (Bahasa Indonesia) =====
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+
+stopword_factory = StopWordRemoverFactory()
+STOPWORDS = set(stopword_factory.get_stop_words())
 
 # DATA CONTOH (sementara)
 documents = [
@@ -27,37 +34,18 @@ documents = [
     {"id": 20, "judul": "Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan"},
 ]
 
-
 def preprocess(text):
-    """
-    Preprocessing teks: lowercase dan tokenisasi.
-    Bisa ditambahkan stemming/stopword removal di sini.
-    """
     return text.lower().split()
 
-
-def normalize(scores):
-    """
-    Normalisasi skor ke rentang 0-1.
-    Diperlukan karena BM25, Aho-Corasick, dan SBERT memiliki skala berbeda.
-    """
-    arr = np.array(scores, dtype=float)
-    if arr.max() == arr.min():
-        return np.zeros_like(arr)
-    return (arr - arr.min()) / (arr.max() - arr.min())
-
+def preprocess_for_aho(text):
+    return [
+        t for t in text.lower().split()
+        if t not in STOPWORDS
+    ]
 
 # ===== BM25 =====
 tokenized_docs = [preprocess(d["judul"]) for d in documents]
 bm25 = BM25Okapi(tokenized_docs)
-
-# ===== AHO-CORASICK (per kata, bukan per judul) =====
-A = ahocorasick.Automaton()
-for i, doc in enumerate(documents):
-    for word in preprocess(doc["judul"]):
-        # Tambahkan setiap kata sebagai pattern, bukan seluruh judul
-        A.add_word(word, i)
-A.make_automaton()
 
 # ===== SBERT (model multilingual untuk Bahasa Indonesia) =====
 model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
@@ -66,7 +54,15 @@ doc_embeddings = model.encode(
     convert_to_tensor=True
 )
 
+# ===== Aho-Corasick =====
+def build_aho_automaton(keywords):
+    A = ahocorasick.Automaton()
+    for idx, word in enumerate(keywords):
+        A.add_word(word, (idx, word))
+    A.make_automaton()
+    return A
 
+# ===== Search =====
 def search(query):
     """
     Melakukan pencarian dengan menggabungkan skor dari:
@@ -87,32 +83,51 @@ def search(query):
 
     # ===== BM25 Scoring =====
     bm25_raw = bm25.get_scores(tokens)
-    bm25_scores = normalize(bm25_raw)
+    bm25_scores = (bm25_raw - bm25_raw.min()) / (bm25_raw.max() - bm25_raw.min() + 1e-9)
 
     # ===== SBERT Scoring =====
     query_embedding = model.encode(query, convert_to_tensor=True)
-    sbert_raw = util.cos_sim(query_embedding, doc_embeddings)[0]
-    sbert_scores = normalize(sbert_raw.cpu().numpy())
+    sbert_raw = util.cos_sim(query_embedding, doc_embeddings)[0].cpu().numpy()
+    sbert_scores = (sbert_raw - sbert_raw.min()) / (sbert_raw.max() - sbert_raw.min() + 1e-9)
 
     # ===== Aho-Corasick Scoring =====
-    aho_scores_raw = [0] * len(documents)
-    for _, idx in A.iter(query.lower()):
-        aho_scores_raw[idx] += 1
-    aho_scores = normalize(aho_scores_raw)
+    aho_tokens = preprocess_for_aho(query)
+    automaton = build_aho_automaton(aho_tokens)
+    aho_scores = []
+
+    for doc in documents:
+        text = doc["judul"].lower()
+        found = False
+
+        for _, _ in automaton.iter(text):
+            found = True
+            break
+
+        aho_scores.append(1.0 if found else 0.0)
 
     # ===== Combine Scores dengan Weighted Sum =====
     # Bobot bisa disesuaikan berdasarkan kebutuhan
-    WEIGHT_BM25 = 0.3
     WEIGHT_AHO = 0.2
-    WEIGHT_SBERT = 0.5
+    WEIGHT_BM25 = 0.4
+    WEIGHT_SBERT = 0.4
 
     results = []
     for i, doc in enumerate(documents):
-        combined_score = (
-            WEIGHT_BM25 * bm25_scores[i] +
-            WEIGHT_AHO * aho_scores[i] +
-            WEIGHT_SBERT * sbert_scores[i]
-        )
+        if mode == "bm25":
+            combined_score = bm25_scores[i]
+
+        elif mode == "sbert":
+            combined_score = sbert_scores[i]
+
+        elif mode == "aho":
+            combined_score = aho_scores[i]
+
+        else:  # hybrid
+            combined_score = (
+                WEIGHT_BM25 * bm25_scores[i] +
+                WEIGHT_AHO * aho_scores[i] +
+                WEIGHT_SBERT * sbert_scores[i]
+            )
 
         results.append({
             "id": doc["id"],

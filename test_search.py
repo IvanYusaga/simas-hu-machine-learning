@@ -15,6 +15,7 @@ test_queries = [
     "bantuan hukum dan perlindungan hukum bagi masyarakat",
     "penyelesaian sengketa perdata dan hubungan kerja",
     "tata cara administrasi dan pendaftaran perkara di pengadilan",
+    "peralihan",
 ]
 
 for q in test_queries:
