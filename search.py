@@ -5,9 +5,26 @@ import numpy as np
 
 # DATA CONTOH (sementara)
 documents = [
-    {"id": 1, "judul": "Sistem Informasi Magang Berbasis Web"},
-    {"id": 2, "judul": "Analisis Sentimen Twitter Menggunakan BERT"},
-    {"id": 3, "judul": "Aplikasi Pencarian Judul Skripsi dengan BM25"},
+    {"id": 1, "judul": "Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri"},
+    {"id": 2, "judul": "Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana"},
+    {"id": 3, "judul": "Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum"},
+    {"id": 4, "judul": "Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian"},
+    {"id": 5, "judul": "Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata"},
+    {"id": 6, "judul": "Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik"},
+    {"id": 7, "judul": "Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan"},
+    {"id": 8, "judul": "Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum"},
+    {"id": 9, "judul": "Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja"},
+    {"id": 10, "judul": "Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja"},
+    {"id": 11, "judul": "Peran Advokat dalam Pendampingan Hukum Perkara Pidana"},
+    {"id": 12, "judul": "Penerapan Asas Legalitas dalam Penanganan Perkara Pidana"},
+    {"id": 13, "judul": "Mekanisme Administrasi Perkara di Pengadilan Negeri"},
+    {"id": 14, "judul": "Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court"},
+    {"id": 15, "judul": "Perlindungan Hukum Konsumen terhadap Produk Cacat"},
+    {"id": 16, "judul": "Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangg"},
+    {"id": 17, "judul": "Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan"},
+    {"id": 18, "judul": "Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan"},
+    {"id": 19, "judul": "Pelaksanaan Tugas Panitera dalam Administrasi Persidangan"},
+    {"id": 20, "judul": "Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan"},
 ]
 
 
@@ -85,9 +102,9 @@ def search(query):
 
     # ===== Combine Scores dengan Weighted Sum =====
     # Bobot bisa disesuaikan berdasarkan kebutuhan
-    WEIGHT_BM25 = 0.5
-    WEIGHT_AHO = 0.1
-    WEIGHT_SBERT = 0.4
+    WEIGHT_BM25 = 0.3
+    WEIGHT_AHO = 0.2
+    WEIGHT_SBERT = 0.5
 
     results = []
     for i, doc in enumerate(documents):

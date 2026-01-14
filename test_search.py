@@ -10,9 +10,11 @@ print("TESTING SEARCH ENGINE")
 print("=" * 60)
 
 test_queries = [
-    "sistem informasi",
-    "analisis sentimen",
-    "pencarian skripsi",
+    "bagaimana proses penanganan perkara pidana di pengadilan",
+    "peran jaksa dan advokat dalam sistem peradilan pidana",
+    "bantuan hukum dan perlindungan hukum bagi masyarakat",
+    "penyelesaian sengketa perdata dan hubungan kerja",
+    "tata cara administrasi dan pendaftaran perkara di pengadilan",
 ]
 
 for q in test_queries:
