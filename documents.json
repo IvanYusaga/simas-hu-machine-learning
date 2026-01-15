@@ -1,0 +1,402 @@
+[
+    {
+        "id": 1,
+        "judul": "Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri"
+    },
+    {
+        "id": 2,
+        "judul": "Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana"
+    },
+    {
+        "id": 3,
+        "judul": "Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum"
+    },
+    {
+        "id": 4,
+        "judul": "Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian"
+    },
+    {
+        "id": 5,
+        "judul": "Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata"
+    },
+    {
+        "id": 6,
+        "judul": "Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik"
+    },
+    {
+        "id": 7,
+        "judul": "Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan"
+    },
+    {
+        "id": 8,
+        "judul": "Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum"
+    },
+    {
+        "id": 9,
+        "judul": "Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja"
+    },
+    {
+        "id": 10,
+        "judul": "Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja"
+    },
+    {
+        "id": 11,
+        "judul": "Peran Advokat dalam Pendampingan Hukum Perkara Pidana"
+    },
+    {
+        "id": 12,
+        "judul": "Penerapan Asas Legalitas dalam Penanganan Perkara Pidana"
+    },
+    {
+        "id": 13,
+        "judul": "Mekanisme Administrasi Perkara di Pengadilan Negeri"
+    },
+    {
+        "id": 14,
+        "judul": "Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court"
+    },
+    {
+        "id": 15,
+        "judul": "Perlindungan Hukum Konsumen terhadap Produk Cacat"
+    },
+    {
+        "id": 16,
+        "judul": "Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga"
+    },
+    {
+        "id": 17,
+        "judul": "Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan"
+    },
+    {
+        "id": 18,
+        "judul": "Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan"
+    },
+    {
+        "id": 19,
+        "judul": "Pelaksanaan Tugas Panitera dalam Administrasi Persidangan"
+    },
+    {
+        "id": 20,
+        "judul": "Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan"
+    },
+    {
+        "id": 21,
+        "judul": "Analisis Proses Penahanan Tersangka dalam Perkara Pidana"
+    },
+    {
+        "id": 22,
+        "judul": "Peran Penyidik dalam Pengungkapan Tindak Pidana Korupsi"
+    },
+    {
+        "id": 23,
+        "judul": "Pelaksanaan Eksekusi Putusan Perdata oleh Pengadilan"
+    },
+    {
+        "id": 24,
+        "judul": "Tinjauan Yuridis terhadap Perjanjian Sewa Menyewa"
+    },
+    {
+        "id": 25,
+        "judul": "Perlindungan Hukum terhadap Korban Tindak Pidana"
+    },
+    {
+        "id": 26,
+        "judul": "Analisis Penyelesaian Sengketa Waris di Pengadilan Agama"
+    },
+    {
+        "id": 27,
+        "judul": "Proses Penyusunan Surat Dakwaan oleh Jaksa Penuntut Umum"
+    },
+    {
+        "id": 28,
+        "judul": "Peranan Mediator dalam Penyelesaian Sengketa Perdata"
+    },
+    {
+        "id": 29,
+        "judul": "Pelaksanaan Diversi dalam Perkara Anak Berhadapan dengan Hukum"
+    },
+    {
+        "id": 30,
+        "judul": "Analisis Proses Banding dalam Perkara Pidana"
+    },
+    {
+        "id": 31,
+        "judul": "Tinjauan Hukum terhadap Perjanjian Kerja Waktu Tertentu"
+    },
+    {
+        "id": 32,
+        "judul": "Peran Kepolisian dalam Penanganan Tindak Pidana Lalu Lintas"
+    },
+    {
+        "id": 33,
+        "judul": "Pelaksanaan Hak Tersangka dalam Proses Penyidikan"
+    },
+    {
+        "id": 34,
+        "judul": "Analisis Proses Mediasi di Pengadilan Negeri"
+    },
+    {
+        "id": 35,
+        "judul": "Perlindungan Hukum terhadap Pekerja Migran Indonesia"
+    },
+    {
+        "id": 36,
+        "judul": "Proses Pengajuan Permohonan Praperadilan"
+    },
+    {
+        "id": 37,
+        "judul": "Peranan Panitera dalam Pengelolaan Berkas Perkara"
+    },
+    {
+        "id": 38,
+        "judul": "Analisis Proses Pembuktian dalam Perkara Perdata"
+    },
+    {
+        "id": 39,
+        "judul": "Pelaksanaan Putusan Hak Asuh Anak Pasca Perceraian"
+    },
+    {
+        "id": 40,
+        "judul": "Tinjauan Yuridis Sengketa Tanah Warisan"
+    },
+    {
+        "id": 41,
+        "judul": "Peran Jaksa dalam Penuntutan Tindak Pidana Narkotika"
+    },
+    {
+        "id": 42,
+        "judul": "Analisis Proses Pemeriksaan Saksi di Persidangan"
+    },
+    {
+        "id": 43,
+        "judul": "Pelaksanaan Eksekusi Jaminan Fidusia"
+    },
+    {
+        "id": 44,
+        "judul": "Tinjauan Hukum terhadap Perjanjian Jual Beli"
+    },
+    {
+        "id": 45,
+        "judul": "Perlindungan Hukum terhadap Konsumen Jasa Keuangan"
+    },
+    {
+        "id": 46,
+        "judul": "Analisis Penyelesaian Sengketa Asuransi"
+    },
+    {
+        "id": 47,
+        "judul": "Peran Advokat dalam Perkara Perdata"
+    },
+    {
+        "id": 48,
+        "judul": "Pelaksanaan Sidang Elektronik di Pengadilan"
+    },
+    {
+        "id": 49,
+        "judul": "Tinjauan Yuridis Tindak Pidana Penipuan"
+    },
+    {
+        "id": 50,
+        "judul": "Analisis Proses Penyitaan Barang Bukti"
+    },
+    {
+        "id": 51,
+        "judul": "Peran Penyidik dalam Tindak Pidana Siber"
+    },
+    {
+        "id": 52,
+        "judul": "Pelaksanaan Pemeriksaan Terdakwa di Persidangan"
+    },
+    {
+        "id": 53,
+        "judul": "Analisis Proses Kasasi di Mahkamah Agung"
+    },
+    {
+        "id": 54,
+        "judul": "Tinjauan Hukum tentang Wanprestasi"
+    },
+    {
+        "id": 55,
+        "judul": "Perlindungan Hukum terhadap Anak Korban Kekerasan"
+    },
+    {
+        "id": 56,
+        "judul": "Analisis Penyelesaian Sengketa Perbankan"
+    },
+    {
+        "id": 57,
+        "judul": "Peran Kurator dalam Kepailitan"
+    },
+    {
+        "id": 58,
+        "judul": "Pelaksanaan Putusan Pidana Penjara"
+    },
+    {
+        "id": 59,
+        "judul": "Tinjauan Yuridis Tindak Pidana Penggelapan"
+    },
+    {
+        "id": 60,
+        "judul": "Analisis Proses Penetapan Hakim"
+    },
+    {
+        "id": 61,
+        "judul": "Peran Kepolisian dalam Penanganan KDRT"
+    },
+    {
+        "id": 62,
+        "judul": "Pelaksanaan Pemeriksaan Barang Bukti"
+    },
+    {
+        "id": 63,
+        "judul": "Analisis Proses Mediasi Non-Litigasi"
+    },
+    {
+        "id": 64,
+        "judul": "Tinjauan Hukum Sengketa Perjanjian Kredit"
+    },
+    {
+        "id": 65,
+        "judul": "Perlindungan Hukum terhadap Pelaku Usaha"
+    },
+    {
+        "id": 66,
+        "judul": "Analisis Penyelesaian Sengketa Konsumen"
+    },
+    {
+        "id": 67,
+        "judul": "Peran Hakim dalam Menjatuhkan Putusan"
+    },
+    {
+        "id": 68,
+        "judul": "Pelaksanaan Putusan Perceraian"
+    },
+    {
+        "id": 69,
+        "judul": "Tinjauan Yuridis Tindak Pidana Korupsi"
+    },
+    {
+        "id": 70,
+        "judul": "Analisis Proses Penggeledahan"
+    },
+    {
+        "id": 71,
+        "judul": "Peran Jaksa dalam Eksekusi Barang Rampasan"
+    },
+    {
+        "id": 72,
+        "judul": "Pelaksanaan Pemeriksaan Ahli di Persidangan"
+    },
+    {
+        "id": 73,
+        "judul": "Analisis Proses Gugatan Sederhana"
+    },
+    {
+        "id": 74,
+        "judul": "Tinjauan Hukum Perjanjian Lisensi"
+    },
+    {
+        "id": 75,
+        "judul": "Perlindungan Hukum terhadap Hak Kekayaan Intelektual"
+    },
+    {
+        "id": 76,
+        "judul": "Analisis Sengketa Hak Cipta"
+    },
+    {
+        "id": 77,
+        "judul": "Peran Notaris dalam Akta Jual Beli"
+    },
+    {
+        "id": 78,
+        "judul": "Pelaksanaan Putusan Sengketa Tanah"
+    },
+    {
+        "id": 79,
+        "judul": "Tinjauan Yuridis Tindak Pidana Pencucian Uang"
+    },
+    {
+        "id": 80,
+        "judul": "Analisis Proses Pembelaan Terdakwa"
+    },
+    {
+        "id": 81,
+        "judul": "Peran Pengacara dalam Konsultasi Hukum"
+    },
+    {
+        "id": 82,
+        "judul": "Pelaksanaan Pemeriksaan Administrasi Perkara"
+    },
+    {
+        "id": 83,
+        "judul": "Analisis Proses Penyusunan Berita Acara"
+    },
+    {
+        "id": 84,
+        "judul": "Tinjauan Hukum Sengketa Perdagangan"
+    },
+    {
+        "id": 85,
+        "judul": "Perlindungan Hukum terhadap Investor"
+    },
+    {
+        "id": 86,
+        "judul": "Analisis Penyelesaian Sengketa Bisnis"
+    },
+    {
+        "id": 87,
+        "judul": "Peran Hakim dalam Mediasi Perkara"
+    },
+    {
+        "id": 88,
+        "judul": "Pelaksanaan Putusan Sengketa Waris"
+    },
+    {
+        "id": 89,
+        "judul": "Tinjauan Yuridis Tindak Pidana Lingkungan"
+    },
+    {
+        "id": 90,
+        "judul": "Analisis Proses Penahanan Anak"
+    },
+    {
+        "id": 91,
+        "judul": "Peran Kejaksaan dalam Tindak Pidana Khusus"
+    },
+    {
+        "id": 92,
+        "judul": "Pelaksanaan Pemeriksaan Berkas Perkara"
+    },
+    {
+        "id": 93,
+        "judul": "Analisis Proses Penuntutan"
+    },
+    {
+        "id": 94,
+        "judul": "Tinjauan Hukum Sengketa Kontrak"
+    },
+    {
+        "id": 95,
+        "judul": "Perlindungan Hukum terhadap UMKM"
+    },
+    {
+        "id": 96,
+        "judul": "Analisis Penyelesaian Sengketa Ketenagakerjaan"
+    },
+    {
+        "id": 97,
+        "judul": "Peran Mediator dalam Sengketa Keluarga"
+    },
+    {
+        "id": 98,
+        "judul": "Pelaksanaan Putusan Sengketa Perdata"
+    },
+    {
+        "id": 99,
+        "judul": "Tinjauan Yuridis Tindak Pidana Perdagangan Orang"
+    },
+    {
+        "id": 100,
+        "judul": "Analisis Proses Pemeriksaan Terdakwa di Pengadilan"
+    }
+]

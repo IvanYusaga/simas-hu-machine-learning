@@ -1,46 +1,51 @@
 from sentence_transformers import SentenceTransformer, util
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from rank_bm25 import BM25Okapi
 import ahocorasick
 import numpy as np
 
+# ===== STOPWORD (Bahasa Indonesia) =====
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+
+stopword_factory = StopWordRemoverFactory()
+STOPWORDS = set(stopword_factory.get_stop_words())
+
 # DATA CONTOH (sementara)
 documents = [
-    {"id": 1, "judul": "Sistem Informasi Magang Berbasis Web"},
-    {"id": 2, "judul": "Analisis Sentimen Twitter Menggunakan BERT"},
-    {"id": 3, "judul": "Aplikasi Pencarian Judul Skripsi dengan BM25"},
+    {"id": 1, "judul": "Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri"},
+    {"id": 2, "judul": "Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana"},
+    {"id": 3, "judul": "Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum"},
+    {"id": 4, "judul": "Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian"},
+    {"id": 5, "judul": "Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata"},
+    {"id": 6, "judul": "Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik"},
+    {"id": 7, "judul": "Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan"},
+    {"id": 8, "judul": "Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum"},
+    {"id": 9, "judul": "Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja"},
+    {"id": 10, "judul": "Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja"},
+    {"id": 11, "judul": "Peran Advokat dalam Pendampingan Hukum Perkara Pidana"},
+    {"id": 12, "judul": "Penerapan Asas Legalitas dalam Penanganan Perkara Pidana"},
+    {"id": 13, "judul": "Mekanisme Administrasi Perkara di Pengadilan Negeri"},
+    {"id": 14, "judul": "Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court"},
+    {"id": 15, "judul": "Perlindungan Hukum Konsumen terhadap Produk Cacat"},
+    {"id": 16, "judul": "Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangg"},
+    {"id": 17, "judul": "Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan"},
+    {"id": 18, "judul": "Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan"},
+    {"id": 19, "judul": "Pelaksanaan Tugas Panitera dalam Administrasi Persidangan"},
+    {"id": 20, "judul": "Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan"},
 ]
 
-
 def preprocess(text):
-    """
-    Preprocessing teks: lowercase dan tokenisasi.
-    Bisa ditambahkan stemming/stopword removal di sini.
-    """
     return text.lower().split()
 
-
-def normalize(scores):
-    """
-    Normalisasi skor ke rentang 0-1.
-    Diperlukan karena BM25, Aho-Corasick, dan SBERT memiliki skala berbeda.
-    """
-    arr = np.array(scores, dtype=float)
-    if arr.max() == arr.min():
-        return np.zeros_like(arr)
-    return (arr - arr.min()) / (arr.max() - arr.min())
-
+def preprocess_for_aho(text):
+    return [
+        t for t in text.lower().split()
+        if t not in STOPWORDS
+    ]
 
 # ===== BM25 =====
 tokenized_docs = [preprocess(d["judul"]) for d in documents]
 bm25 = BM25Okapi(tokenized_docs)
-
-# ===== AHO-CORASICK (per kata, bukan per judul) =====
-A = ahocorasick.Automaton()
-for i, doc in enumerate(documents):
-    for word in preprocess(doc["judul"]):
-        # Tambahkan setiap kata sebagai pattern, bukan seluruh judul
-        A.add_word(word, i)
-A.make_automaton()
 
 # ===== SBERT (model multilingual untuk Bahasa Indonesia) =====
 model = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
@@ -49,7 +54,15 @@ doc_embeddings = model.encode(
     convert_to_tensor=True
 )
 
+# ===== Aho-Corasick =====
+def build_aho_automaton(keywords):
+    A = ahocorasick.Automaton()
+    for idx, word in enumerate(keywords):
+        A.add_word(word, (idx, word))
+    A.make_automaton()
+    return A
 
+# ===== Search =====
 def search(query):
     """
     Melakukan pencarian dengan menggabungkan skor dari:
@@ -70,23 +83,32 @@ def search(query):
 
     # ===== BM25 Scoring =====
     bm25_raw = bm25.get_scores(tokens)
-    bm25_scores = normalize(bm25_raw)
+    bm25_scores = (bm25_raw - bm25_raw.min()) / (bm25_raw.max() - bm25_raw.min() + 1e-9)
 
     # ===== SBERT Scoring =====
     query_embedding = model.encode(query, convert_to_tensor=True)
-    sbert_raw = util.cos_sim(query_embedding, doc_embeddings)[0]
-    sbert_scores = normalize(sbert_raw.cpu().numpy())
+    sbert_raw = util.cos_sim(query_embedding, doc_embeddings)[0].cpu().numpy()
+    sbert_scores = (sbert_raw - sbert_raw.min()) / (sbert_raw.max() - sbert_raw.min() + 1e-9)
 
     # ===== Aho-Corasick Scoring =====
-    aho_scores_raw = [0] * len(documents)
-    for _, idx in A.iter(query.lower()):
-        aho_scores_raw[idx] += 1
-    aho_scores = normalize(aho_scores_raw)
+    aho_tokens = preprocess_for_aho(query)
+    automaton = build_aho_automaton(aho_tokens)
+    aho_scores = []
+
+    for doc in documents:
+        text = doc["judul"].lower()
+        found = False
+
+        for _, _ in automaton.iter(text):
+            found = True
+            break
+
+        aho_scores.append(1.0 if found else 0.0)
 
     # ===== Combine Scores dengan Weighted Sum =====
     # Bobot bisa disesuaikan berdasarkan kebutuhan
-    WEIGHT_BM25 = 0.5
-    WEIGHT_AHO = 0.1
+    WEIGHT_AHO = 0.2
+    WEIGHT_BM25 = 0.4
     WEIGHT_SBERT = 0.4
 
     results = []

@@ -3,16 +3,19 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TensorFlow warnings
 warnings.filterwarnings('ignore')
 
-from search import search
+from search2 import search
 
 print("=" * 60)
 print("TESTING SEARCH ENGINE")
 print("=" * 60)
 
 test_queries = [
-    "sistem informasi",
-    "analisis sentimen",
-    "pencarian skripsi",
+    "administrasi perkara di pengadilan",
+    "penanganan perkara pidana",
+    "pendaftaran perkara di pengadilan",
+    "penyelesaian sengketa perdata dan hubungan kerja",
+    "tata cara administrasi dan pendaftaran perkara di pengadilan",
+    "peralihan",
 ]
 
 for q in test_queries:
