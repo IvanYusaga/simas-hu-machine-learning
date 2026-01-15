@@ -54,6 +54,31 @@ def build_aho_automaton(keywords):
     A.make_automaton()
     return A
 
+def aho_count_scores(query, documents):
+    # preprocessing query → keyword
+    keywords = preprocess_for_aho(query)
+
+    # bangun automaton (trie + failure link)
+    automaton = build_aho_automaton(keywords)
+
+    scores = []
+
+    for doc in documents:
+        count = 0
+
+        # SATU KALI SCAN judul dokumen
+        for _, (_, matched_word) in automaton.iter(doc["judul"].lower()):
+            count += 1
+
+        scores.append(count)
+
+    # normalisasi (opsional tapi direkomendasikan)
+    scores = np.array(scores, dtype=float)
+    if scores.max() > 0:
+        scores = scores / scores.max()
+
+    return scores
+
 # ==================================================
 # RANKING (INTI)
 # ==================================================
@@ -69,16 +94,7 @@ def rank_documents(query, mode="hybrid"):
     sbert_scores = (sbert_raw - sbert_raw.min()) / (sbert_raw.max() - sbert_raw.min() + 1e-9)
 
     # ----- AHO -----
-    aho_tokens = preprocess_for_aho(query)
-    automaton = build_aho_automaton(aho_tokens)
-
-    aho_scores = []
-    for doc in documents:
-        found = False
-        for _, _ in automaton.iter(doc["judul"].lower()):
-            found = True
-            break
-        aho_scores.append(1.0 if found else 0.0)
+    aho_scores = aho_count_scores(query, documents)
 
     # ----- COMBINE -----
     scores = []
@@ -91,8 +107,8 @@ def rank_documents(query, mode="hybrid"):
             score = aho_scores[i]
         else:  # hybrid
             score = (
-                0.5 * bm25_scores[i] +
-                0.3 * aho_scores[i] +
+                0.6 * bm25_scores[i] +
+                0.2 * aho_scores[i] +
                 0.2 * sbert_scores[i]
             )
         scores.append((doc["id"], score))
@@ -119,8 +135,8 @@ def search(query, mode="hybrid"):
             score = aho_s[idx]
         else:
             score = (
-                0.5 * bm25_s[idx] +
-                0.3 * aho_s[idx] +
+                0.6 * bm25_s[idx] +
+                0.2 * aho_s[idx] +
                 0.2 * sbert_s[idx]
             )
 
