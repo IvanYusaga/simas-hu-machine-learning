@@ -1,0 +1,6 @@
+﻿Precision@5: 0.60
+Recall@5: 0.60
+Precision@10: 0.30
+Recall@10: 0.60
+Precision@15: 0.20
+Recall@15: 0.60
