@@ -1,0 +1,381 @@
+﻿============================================================
+TESTING SEARCH ENGINE
+============================================================
+
+Query: 'administrasi perkara di pengadilan'
+----------------------------------------
+1. Mekanisme Administrasi Perkara di Pengadilan Negeri
+   Score: 1.0000
+   BM25=1.0000, Aho=1.0000, SBERT=1.0000
+2. Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri
+   Score: 0.7727
+   BM25=0.4805, Aho=1.0000, SBERT=0.9513
+3. Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan
+   Score: 0.6888
+   BM25=0.5079, Aho=1.0000, SBERT=0.7141
+4. Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan
+   Score: 0.6685
+   BM25=0.2602, Aho=1.0000, SBERT=0.9111
+5. Peran Advokat dalam Pendampingan Hukum Perkara Pidana
+   Score: 0.5558
+   BM25=0.1177, Aho=1.0000, SBERT=0.7717
+6. Pelaksanaan Tugas Panitera dalam Administrasi Persidangan
+   Score: 0.5317
+   BM25=0.4267, Aho=1.0000, SBERT=0.4026
+7. Penerapan Asas Legalitas dalam Penanganan Perkara Pidana
+   Score: 0.5267
+   BM25=0.1177, Aho=1.0000, SBERT=0.6990
+8. Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan
+   Score: 0.4434
+   BM25=0.1110, Aho=1.0000, SBERT=0.4976
+9. Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga
+   Score: 0.2792
+   BM25=0.1177, Aho=1.0000, SBERT=0.0803
+10. Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan
+   Score: 0.2575
+   BM25=0.1360, Aho=0.0000, SBERT=0.5078
+11. Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana
+   Score: 0.2470
+   BM25=0.0000, Aho=0.0000, SBERT=0.6175
+12. Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum
+   Score: 0.2257
+   BM25=0.1294, Aho=0.0000, SBERT=0.4349
+13. Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik
+   Score: 0.2114
+   BM25=0.0000, Aho=0.0000, SBERT=0.5286
+14. Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum
+   Score: 0.1743
+   BM25=0.0000, Aho=0.0000, SBERT=0.4358
+15. Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja
+   Score: 0.1412
+   BM25=0.1434, Aho=0.0000, SBERT=0.2097
+16. Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata
+   Score: 0.1039
+   BM25=0.0000, Aho=0.0000, SBERT=0.2597
+17. Perlindungan Hukum Konsumen terhadap Produk Cacat
+   Score: 0.0555
+   BM25=0.0000, Aho=0.0000, SBERT=0.1387
+18. Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja
+   Score: 0.0423
+   BM25=0.0000, Aho=0.0000, SBERT=0.1059
+19. Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian
+   Score: 0.0004
+   BM25=0.0000, Aho=0.0000, SBERT=0.0010
+20. Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court
+   Score: 0.0000
+   BM25=0.0000, Aho=0.0000, SBERT=0.0000
+
+Query: 'penanganan perkara pidana'
+----------------------------------------
+1. Penerapan Asas Legalitas dalam Penanganan Perkara Pidana
+   Score: 0.9432
+   BM25=1.0000, Aho=1.0000, SBERT=0.8581
+2. Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri
+   Score: 0.8505
+   BM25=0.8921, Aho=1.0000, SBERT=0.7341
+3. Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga
+   Score: 0.7512
+   BM25=0.7889, Aho=1.0000, SBERT=0.5890
+4. Peran Advokat dalam Pendampingan Hukum Perkara Pidana
+   Score: 0.6917
+   BM25=0.4221, Aho=1.0000, SBERT=0.8072
+5. Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana
+   Score: 0.6753
+   BM25=0.1883, Aho=1.0000, SBERT=1.0000
+6. Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan
+   Score: 0.6630
+   BM25=0.3980, Aho=1.0000, SBERT=0.7594
+7. Mekanisme Administrasi Perkara di Pengadilan Negeri
+   Score: 0.5508
+   BM25=0.2246, Aho=1.0000, SBERT=0.6524
+8. Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan
+   Score: 0.5483
+   BM25=0.3980, Aho=1.0000, SBERT=0.4727
+9. Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian
+   Score: 0.4481
+   BM25=0.1990, Aho=1.0000, SBERT=0.4212
+10. Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum
+   Score: 0.3324
+   BM25=0.0000, Aho=0.0000, SBERT=0.8311
+11. Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan
+   Score: 0.3048
+   BM25=0.0000, Aho=0.0000, SBERT=0.7620
+12. Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum
+   Score: 0.2581
+   BM25=0.0000, Aho=0.0000, SBERT=0.6453
+13. Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik
+   Score: 0.1882
+   BM25=0.0000, Aho=0.0000, SBERT=0.4704
+14. Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan
+   Score: 0.1669
+   BM25=0.0000, Aho=0.0000, SBERT=0.4172
+15. Perlindungan Hukum Konsumen terhadap Produk Cacat
+   Score: 0.1539
+   BM25=0.0000, Aho=0.0000, SBERT=0.3847
+16. Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata
+   Score: 0.1043
+   BM25=0.0000, Aho=0.0000, SBERT=0.2607
+17. Pelaksanaan Tugas Panitera dalam Administrasi Persidangan
+   Score: 0.0823
+   BM25=0.0000, Aho=0.0000, SBERT=0.2058
+18. Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja
+   Score: 0.0734
+   BM25=0.0000, Aho=0.0000, SBERT=0.1835
+19. Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court
+   Score: 0.0556
+   BM25=0.0000, Aho=0.0000, SBERT=0.1390
+20. Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja
+   Score: 0.0000
+   BM25=0.0000, Aho=0.0000, SBERT=0.0000
+
+Query: 'pendaftaran perkara di pengadilan'
+----------------------------------------
+1. Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan
+   Score: 0.9544
+   BM25=0.8859, Aho=1.0000, SBERT=1.0000
+2. Mekanisme Administrasi Perkara di Pengadilan Negeri
+   Score: 0.9245
+   BM25=1.0000, Aho=1.0000, SBERT=0.8111
+3. Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri
+   Score: 0.9008
+   BM25=0.8381, Aho=1.0000, SBERT=0.9139
+4. Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan
+   Score: 0.8434
+   BM25=0.9957, Aho=1.0000, SBERT=0.6128
+5. Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan
+   Score: 0.7115
+   BM25=0.4539, Aho=1.0000, SBERT=0.8248
+6. Peran Advokat dalam Pendampingan Hukum Perkara Pidana
+   Score: 0.5608
+   BM25=0.2053, Aho=1.0000, SBERT=0.6966
+7. Penerapan Asas Legalitas dalam Penanganan Perkara Pidana
+   Score: 0.5508
+   BM25=0.2053, Aho=1.0000, SBERT=0.6717
+8. Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan
+   Score: 0.4705
+   BM25=0.1936, Aho=1.0000, SBERT=0.4827
+9. Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga
+   Score: 0.3092
+   BM25=0.2053, Aho=1.0000, SBERT=0.0677
+10. Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum
+   Score: 0.2322
+   BM25=0.2257, Aho=0.0000, SBERT=0.3549
+11. Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik
+   Score: 0.1998
+   BM25=0.0000, Aho=0.0000, SBERT=0.4995
+12. Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana
+   Score: 0.1989
+   BM25=0.0000, Aho=0.0000, SBERT=0.4974
+13. Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja
+   Score: 0.1795
+   BM25=0.2500, Aho=0.0000, SBERT=0.1987
+14. Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum
+   Score: 0.1692
+   BM25=0.0000, Aho=0.0000, SBERT=0.4231
+15. Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata
+   Score: 0.1142
+   BM25=0.0000, Aho=0.0000, SBERT=0.2855
+16. Pelaksanaan Tugas Panitera dalam Administrasi Persidangan
+   Score: 0.0877
+   BM25=0.0000, Aho=0.0000, SBERT=0.2192
+17. Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court
+   Score: 0.0843
+   BM25=0.0000, Aho=0.0000, SBERT=0.2108
+18. Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja
+   Score: 0.0733
+   BM25=0.0000, Aho=0.0000, SBERT=0.1832
+19. Perlindungan Hukum Konsumen terhadap Produk Cacat
+   Score: 0.0617
+   BM25=0.0000, Aho=0.0000, SBERT=0.1542
+20. Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian
+   Score: 0.0000
+   BM25=0.0000, Aho=0.0000, SBERT=0.0000
+
+Query: 'penyelesaian sengketa perdata dan hubungan kerja'
+----------------------------------------
+1. Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja
+   Score: 1.0000
+   BM25=1.0000, Aho=1.0000, SBERT=1.0000
+2. Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata
+   Score: 0.7808
+   BM25=0.7694, Aho=1.0000, SBERT=0.6826
+3. Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja
+   Score: 0.7550
+   BM25=0.4267, Aho=1.0000, SBERT=0.9609
+4. Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court
+   Score: 0.5106
+   BM25=0.2744, Aho=1.0000, SBERT=0.5023
+5. Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan
+   Score: 0.4131
+   BM25=0.2080, Aho=1.0000, SBERT=0.3247
+6. Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan
+   Score: 0.2266
+   BM25=0.1680, Aho=0.0000, SBERT=0.3986
+7. Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik
+   Score: 0.2064
+   BM25=0.1680, Aho=0.0000, SBERT=0.3482
+8. Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan
+   Score: 0.2032
+   BM25=0.1508, Aho=0.0000, SBERT=0.3571
+9. Pelaksanaan Tugas Panitera dalam Administrasi Persidangan
+   Score: 0.1813
+   BM25=0.0000, Aho=0.0000, SBERT=0.4532
+10. Penerapan Asas Legalitas dalam Penanganan Perkara Pidana
+   Score: 0.1544
+   BM25=0.0000, Aho=0.0000, SBERT=0.3859
+11. Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri
+   Score: 0.1461
+   BM25=0.0000, Aho=0.0000, SBERT=0.3653
+12. Mekanisme Administrasi Perkara di Pengadilan Negeri
+   Score: 0.1338
+   BM25=0.0000, Aho=0.0000, SBERT=0.3345
+13. Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga
+   Score: 0.1170
+   BM25=0.0000, Aho=0.0000, SBERT=0.2925
+14. Peran Advokat dalam Pendampingan Hukum Perkara Pidana
+   Score: 0.1126
+   BM25=0.0000, Aho=0.0000, SBERT=0.2815
+15. Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana
+   Score: 0.0708
+   BM25=0.0000, Aho=0.0000, SBERT=0.1769
+16. Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum
+   Score: 0.0675
+   BM25=0.0000, Aho=0.0000, SBERT=0.1687
+17. Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian
+   Score: 0.0411
+   BM25=0.0000, Aho=0.0000, SBERT=0.1027
+18. Perlindungan Hukum Konsumen terhadap Produk Cacat
+   Score: 0.0405
+   BM25=0.0000, Aho=0.0000, SBERT=0.1013
+19. Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum
+   Score: 0.0092
+   BM25=0.0000, Aho=0.0000, SBERT=0.0230
+20. Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan
+   Score: 0.0000
+   BM25=0.0000, Aho=0.0000, SBERT=0.0000
+
+Query: 'tata cara administrasi dan pendaftaran perkara di pengadilan'
+----------------------------------------
+1. Mekanisme Administrasi Perkara di Pengadilan Negeri
+   Score: 1.0000
+   BM25=1.0000, Aho=1.0000, SBERT=1.0000
+2. Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan
+   Score: 0.8631
+   BM25=0.7533, Aho=1.0000, SBERT=0.9043
+3. Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan
+   Score: 0.7947
+   BM25=0.7911, Aho=1.0000, SBERT=0.6957
+4. Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri
+   Score: 0.7691
+   BM25=0.4805, Aho=1.0000, SBERT=0.9422
+5. Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan
+   Score: 0.6189
+   BM25=0.2602, Aho=1.0000, SBERT=0.7871
+6. Pelaksanaan Tugas Panitera dalam Administrasi Persidangan
+   Score: 0.6052
+   BM25=0.4267, Aho=1.0000, SBERT=0.5864
+7. Peran Advokat dalam Pendampingan Hukum Perkara Pidana
+   Score: 0.5529
+   BM25=0.1177, Aho=1.0000, SBERT=0.7644
+8. Penerapan Asas Legalitas dalam Penanganan Perkara Pidana
+   Score: 0.5324
+   BM25=0.1177, Aho=1.0000, SBERT=0.7133
+9. Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan
+   Score: 0.4187
+   BM25=0.1110, Aho=1.0000, SBERT=0.4356
+10. Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik
+   Score: 0.3480
+   BM25=0.2454, Aho=0.0000, SBERT=0.6246
+11. Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga
+   Score: 0.2727
+   BM25=0.1177, Aho=1.0000, SBERT=0.0640
+12. Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana
+   Score: 0.2396
+   BM25=0.0000, Aho=0.0000, SBERT=0.5989
+13. Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja
+   Score: 0.2299
+   BM25=0.2454, Aho=0.0000, SBERT=0.3294
+14. Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum
+   Score: 0.2229
+   BM25=0.1294, Aho=0.0000, SBERT=0.4280
+15. Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja
+   Score: 0.2046
+   BM25=0.1434, Aho=0.0000, SBERT=0.3680
+16. Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata
+   Score: 0.1593
+   BM25=0.0000, Aho=0.0000, SBERT=0.3984
+17. Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum
+   Score: 0.1524
+   BM25=0.0000, Aho=0.0000, SBERT=0.3811
+18. Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court
+   Score: 0.0789
+   BM25=0.0000, Aho=0.0000, SBERT=0.1972
+19. Perlindungan Hukum Konsumen terhadap Produk Cacat
+   Score: 0.0590
+   BM25=0.0000, Aho=0.0000, SBERT=0.1474
+20. Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian
+   Score: 0.0000
+   BM25=0.0000, Aho=0.0000, SBERT=0.0000
+
+Query: 'peralihan'
+----------------------------------------
+1. Prosedur Pendaftaran dan Peralihan Hak Atas Tanah di Kantor Pertanahan
+   Score: 0.9455
+   BM25=1.0000, Aho=1.0000, SBERT=0.8638
+2. Penerapan Keadilan Restoratif dalam Penyelesaian Perkara Pidana Ringan
+   Score: 0.4000
+   BM25=0.0000, Aho=0.0000, SBERT=1.0000
+3. Analisis Proses Penanganan Perkara Pidana Umum di Pengadilan Negeri
+   Score: 0.2626
+   BM25=0.0000, Aho=0.0000, SBERT=0.6565
+4. Mekanisme Administrasi Perkara di Pengadilan Negeri
+   Score: 0.2406
+   BM25=0.0000, Aho=0.0000, SBERT=0.6016
+5. Penerapan Asas Legalitas dalam Penanganan Perkara Pidana
+   Score: 0.2329
+   BM25=0.0000, Aho=0.0000, SBERT=0.5822
+6. Pelaksanaan Tugas Panitera dalam Administrasi Persidangan
+   Score: 0.1915
+   BM25=0.0000, Aho=0.0000, SBERT=0.4788
+7. Analisis Penanganan Perkara Kekerasan Dalam Rumah Tangga
+   Score: 0.1619
+   BM25=0.0000, Aho=0.0000, SBERT=0.4048
+8. Peranan Notaris dalam Pembuatan dan Pengesahan Akta Otentik
+   Score: 0.1545
+   BM25=0.0000, Aho=0.0000, SBERT=0.3863
+9. Peran Kejaksaan dalam Pelaksanaan Eksekusi Putusan Pengadilan
+   Score: 0.1421
+   BM25=0.0000, Aho=0.0000, SBERT=0.3553
+10. Peran Jaksa Penuntut Umum dalam Tahap Penuntutan Tindak Pidana
+   Score: 0.1420
+   BM25=0.0000, Aho=0.0000, SBERT=0.3551
+11. Proses Registrasi dan Penjadwalan Perkara Pidana di Pengadilan
+   Score: 0.1217
+   BM25=0.0000, Aho=0.0000, SBERT=0.3042
+12. Proses Penyelesaian Sengketa Hubungan Industrial di Dinas Tenaga Kerja
+   Score: 0.1070
+   BM25=0.0000, Aho=0.0000, SBERT=0.2675
+13. Peran Advokat dalam Pendampingan Hukum Perkara Pidana
+   Score: 0.0935
+   BM25=0.0000, Aho=0.0000, SBERT=0.2337
+14. Perlindungan Hukum terhadap Anak yang Berhadapan dengan Hukum
+   Score: 0.0570
+   BM25=0.0000, Aho=0.0000, SBERT=0.1426
+15. Analisis Penyusunan Perjanjian Kerja antara Perusahaan dan Pekerja
+   Score: 0.0520
+   BM25=0.0000, Aho=0.0000, SBERT=0.1300
+16. Prosedur Pengajuan Gugatan Perdata melalui Sistem E-Court
+   Score: 0.0321
+   BM25=0.0000, Aho=0.0000, SBERT=0.0802
+17. Pelaksanaan Bantuan Hukum bagi Masyarakat Tidak Mampu di Lembaga Bantuan Hukum
+   Score: 0.0264
+   BM25=0.0000, Aho=0.0000, SBERT=0.0661
+18. Tinjauan Yuridis Proses Penyidikan Tindak Pidana oleh Kepolisian
+   Score: 0.0050
+   BM25=0.0000, Aho=0.0000, SBERT=0.0124
+19. Perlindungan Hukum Konsumen terhadap Produk Cacat
+   Score: 0.0032
+   BM25=0.0000, Aho=0.0000, SBERT=0.0080
+20. Implementasi Mediasi sebagai Alternatif Penyelesaian Sengketa Perdata
+   Score: 0.0000
+   BM25=0.0000, Aho=0.0000, SBERT=0.0000

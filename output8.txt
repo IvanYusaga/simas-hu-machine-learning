@@ -1,0 +1,16 @@
+﻿
+Model: BM25
+Precision@5: 0.60
+Recall@5: 0.92
+
+Model: SBERT
+Precision@5: 0.40
+Recall@5: 0.61
+
+Model: AHO
+Precision@5: 0.40
+Recall@5: 0.58
+
+Model: HYBRID
+Precision@5: 0.53
+Recall@5: 0.81

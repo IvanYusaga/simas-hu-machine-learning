@@ -113,21 +113,11 @@ def search(query):
 
     results = []
     for i, doc in enumerate(documents):
-        if mode == "bm25":
-            combined_score = bm25_scores[i]
-
-        elif mode == "sbert":
-            combined_score = sbert_scores[i]
-
-        elif mode == "aho":
-            combined_score = aho_scores[i]
-
-        else:  # hybrid
-            combined_score = (
-                WEIGHT_BM25 * bm25_scores[i] +
-                WEIGHT_AHO * aho_scores[i] +
-                WEIGHT_SBERT * sbert_scores[i]
-            )
+        combined_score = (
+            WEIGHT_BM25 * bm25_scores[i] +
+            WEIGHT_AHO * aho_scores[i] +
+            WEIGHT_SBERT * sbert_scores[i]
+        )
 
         results.append({
             "id": doc["id"],
