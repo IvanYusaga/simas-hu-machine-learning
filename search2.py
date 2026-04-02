@@ -62,7 +62,7 @@ def load_documents_from_db():
     Load documents from MySQL database.
     Only include laporan that:
     1. Have at least one record in verifikasi table (sudah diajukan)
-    2. Don't have 'daftar ulang' status
+    2. Are leaf nodes (no children)
     """
     global documents_magang, documents_skripsi
     
@@ -70,8 +70,6 @@ def load_documents_from_db():
     try:
         with conn.cursor() as cursor:
             # Query untuk Laporan Magang/PKL
-            # - HARUS ada record di tabel verifikasi (sudah diajukan)
-            # - TIDAK BOLEH ada status 'daftar ulang'
             query_magang = """
                 SELECT 
                     lm.id_laporan_magang_pkl as id,
@@ -79,21 +77,18 @@ def load_documents_from_db():
                     'magang' as tipe
                 FROM laporan_magang_pkl lm
                 WHERE EXISTS (
-                    SELECT 1 FROM verifikasi_laporan_magang_pkl v
-                    WHERE v.id_laporan_magang_pkl = lm.id_laporan_magang_pkl
-                )
+                        SELECT 1 FROM verifikasi_laporan_magang_pkl v
+                        WHERE v.id_laporan_magang_pkl = lm.id_laporan_magang_pkl
+                    )
                 AND NOT EXISTS (
-                    SELECT 1 FROM verifikasi_laporan_magang_pkl v
-                    WHERE v.id_laporan_magang_pkl = lm.id_laporan_magang_pkl
-                    AND v.status_verifikasi = 'daftar ulang'
+                    SELECT 1 FROM laporan_magang_pkl child
+                    WHERE child.id_parent = lm.id_laporan_magang_pkl
                 )
             """
             cursor.execute(query_magang)
             documents_magang = cursor.fetchall()
             
             # Query untuk Laporan Skripsi
-            # - HARUS ada record di tabel verifikasi (sudah diajukan)
-            # - TIDAK BOLEH ada status 'daftar ulang'
             query_skripsi = """
                 SELECT 
                     ls.id_laporan_skripsi as id,
@@ -101,13 +96,12 @@ def load_documents_from_db():
                     'skripsi' as tipe
                 FROM laporan_skripsi ls
                 WHERE EXISTS (
-                    SELECT 1 FROM verifikasi_laporan_skripsi v
-                    WHERE v.id_laporan_skripsi = ls.id_laporan_skripsi
-                )
+                        SELECT 1 FROM verifikasi_laporan_skripsi v
+                        WHERE v.id_laporan_skripsi = ls.id_laporan_skripsi
+                    )
                 AND NOT EXISTS (
-                    SELECT 1 FROM verifikasi_laporan_skripsi v
-                    WHERE v.id_laporan_skripsi = ls.id_laporan_skripsi
-                    AND v.status_verifikasi = 'daftar ulang'
+                    SELECT 1 FROM laporan_skripsi child
+                    WHERE child.id_parent = ls.id_laporan_skripsi
                 )
             """
             cursor.execute(query_skripsi)
