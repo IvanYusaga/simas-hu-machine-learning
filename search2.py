@@ -12,6 +12,15 @@ from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 
 # ==================================================
+# NORMALIZATION MAP
+# ==================================================
+
+try:
+    from normalization_map import NORMALIZATION_MAP
+except Exception:
+    NORMALIZATION_MAP = {}
+
+# ==================================================
 # LOAD ENVIRONMENT
 # ==================================================
 load_dotenv()
@@ -30,6 +39,22 @@ STOPWORDS = set(_stopword_factory.get_stop_words())
 
 _stemmer_factory = StemmerFactory()
 stemmer = _stemmer_factory.create_stemmer()
+
+# ==================================================
+# PRECOMPILED NORMALIZATION
+# ==================================================
+
+NORMALIZATION_PATTERNS = [
+    (
+        re.compile(r"\b" + re.escape(k.lower()) + r"\b"),
+        v.lower()
+    )
+    for k, v in NORMALIZATION_MAP.items()
+]
+
+# =========================================================
+# STEM CACHE
+# =========================================================
 
 @lru_cache(maxsize=50000)
 def cached_stem(word: str) -> str:
@@ -191,14 +216,28 @@ def load_documents_from_db():
     return documents_magang, documents_skripsi
 
 # ==================================================
+# TEXT NORMALIZATION
+# ==================================================
+
+def normalize_text(text: str):
+
+    text = str(text).lower()
+
+    for pattern, replacement in NORMALIZATION_PATTERNS:
+        text = pattern.sub(replacement, text)
+
+    return text
+
+# ==================================================
 # PREPROCESSING
 # ==================================================
 _RE_NON_ALPHANUM = re.compile(r'[^a-z0-9\s]')
 
 def tokenize(text):
-    """Lowercase, strip punctuation, split into tokens."""
-    text = text.lower()
+    text = normalize_text(text)
+
     text = _RE_NON_ALPHANUM.sub(' ', text)
+
     return text.split()
 
 def tokenize_and_stem(text):
@@ -226,7 +265,7 @@ def expand_query(query):
     Expand query with synonyms to improve recall.
     Returns the expanded query string.
     """
-    query_lower = query.lower()
+    query_lower = normalize_text(query)
     expansions = set()
 
     # Check multi-word synonyms first (longer phrases take priority)
@@ -262,7 +301,6 @@ def build_search_index(documents):
 
         stemmed_tokens = tokenize_and_stem(d["judul"])
 
-        # simpan hasil preprocessing sekali saja
         d["judul_clean"] = " ".join(
             tokenize(d["judul"])
         )
@@ -440,7 +478,11 @@ def rank_documents(query, category="magang", mode="hybrid"):
     bm25_scores = normalize_scores(bm25_raw)
 
     # --- SBERT scores (use raw query — model handles semantics) ---
-    q_emb = model.encode(query, convert_to_tensor=True)
+    q_emb = model.encode(
+        query,
+        convert_to_tensor=True
+    )
+    
     sbert_raw = util.cos_sim(q_emb, doc_embeddings)[0].cpu().numpy()
     sbert_scores = normalize_scores(sbert_raw)
 
