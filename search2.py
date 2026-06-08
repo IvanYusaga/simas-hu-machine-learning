@@ -6,6 +6,7 @@ import re
 import os
 import pymysql
 from dotenv import load_dotenv
+from functools import lru_cache
 
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
@@ -29,6 +30,10 @@ STOPWORDS = set(_stopword_factory.get_stop_words())
 
 _stemmer_factory = StemmerFactory()
 stemmer = _stemmer_factory.create_stemmer()
+
+@lru_cache(maxsize=50000)
+def cached_stem(word: str) -> str:
+    return stemmer.stem(word)
 
 # ==================================================
 # SBERT MODEL (Load once)
@@ -203,7 +208,7 @@ def tokenize_and_stem(text):
     for t in tokens:
         if t in STOPWORDS or len(t) <= 1:
             continue
-        stemmed = stemmer.stem(t)
+        stemmed = cached_stem(t)
         if stemmed:
             result.append(stemmed)
     return result
@@ -251,7 +256,25 @@ def build_search_index(documents):
         return None, None, []
 
     # BM25 — use stemmed tokens for better matching
-    tokenized_docs = [tokenize_and_stem(d["judul"]) for d in documents]
+    tokenized_docs = []
+
+    for d in documents:
+
+        stemmed_tokens = tokenize_and_stem(d["judul"])
+
+        # simpan hasil preprocessing sekali saja
+        d["judul_clean"] = " ".join(
+            tokenize(d["judul"])
+        )
+
+        d["judul_stemmed"] = " ".join(
+            stemmed_tokens
+        )
+
+        tokenized_docs.append(
+            stemmed_tokens
+        )
+
     bm25 = BM25Okapi(tokenized_docs)
 
     # SBERT — encode raw titles (SBERT handles semantics itself)
@@ -301,10 +324,11 @@ def aho_score_documents(query, documents):
     scores = []
 
     for doc in documents:
-        doc_text = doc["judul"].lower()
-        doc_text_stemmed = stemmer.stem(doc_text)
-        # Combine original + stemmed doc text for matching
-        combined_text = doc_text + " " + doc_text_stemmed
+        combined_text = (
+            doc.get("judul_clean", "")
+            + " "
+            + doc.get("judul_stemmed", "")
+        )
 
         matched_keywords = set()
         total_matches = 0
