@@ -482,7 +482,7 @@ def rank_documents(query, category="magang", mode="hybrid"):
         query,
         convert_to_tensor=True
     )
-    
+
     sbert_raw = util.cos_sim(q_emb, doc_embeddings)[0].cpu().numpy()
     sbert_scores = normalize_scores(sbert_raw)
 
@@ -491,9 +491,9 @@ def rank_documents(query, category="magang", mode="hybrid"):
     # Aho scores are already 0–1 from coverage+density formula
 
     # --- Combine scores ---
-    W_BM25 = 0.35
-    W_SBERT = 0.45
-    W_AHO = 0.20
+    W_BM25 = 0.30
+    W_SBERT = 0.60
+    W_AHO = 0.10
 
     if mode == "bm25":
         final_scores = bm25_scores
