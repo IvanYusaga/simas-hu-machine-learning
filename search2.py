@@ -58,6 +58,23 @@ NORMALIZATION_PATTERNS = [
 
 @lru_cache(maxsize=50000)
 def cached_stem(word: str) -> str:
+    """
+    Melakukan stemming pada satu kata bahasa Indonesia dengan caching.
+
+    Menggunakan LRU cache (kapasitas 50.000 kata) untuk menghindari
+    pemanggilan stemmer berulang kali pada kata yang sama, sehingga
+    meningkatkan performa secara signifikan saat memproses banyak dokumen.
+
+    Args:
+        word (str): Kata tunggal yang akan di-stem.
+
+    Returns:
+        str: Bentuk dasar (stem) dari kata tersebut.
+
+    Contoh:
+        >>> cached_stem("pembelajaran")
+        'ajar'
+    """
     return stemmer.stem(word)
 
 # ==================================================
@@ -147,6 +164,22 @@ _tokenized_skripsi = []
 # DATABASE CONNECTION
 # ==================================================
 def get_db_connection():
+    """
+    Membuat dan mengembalikan koneksi baru ke database MySQL.
+
+    Koneksi menggunakan konfigurasi dari environment variables
+    (DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD)
+    yang dimuat melalui dotenv.
+
+    Returns:
+        pymysql.connections.Connection: Objek koneksi MySQL dengan
+            charset utf8mb4 dan cursor bertipe DictCursor
+            (hasil query berupa dictionary).
+
+    Raises:
+        pymysql.err.OperationalError: Jika koneksi ke database gagal
+            (misal: server tidak aktif, kredensial salah).
+    """
     return pymysql.connect(
         host=DB_HOST,
         port=DB_PORT,
@@ -162,10 +195,27 @@ def get_db_connection():
 # ==================================================
 def load_documents_from_db():
     """
-    Load documents from MySQL database.
-    Only include laporan that:
-    1. Have at least one record in verifikasi table (sudah diajukan)
-    2. Are leaf nodes (no children)
+    Memuat data dokumen laporan dari database MySQL.
+
+    Fungsi ini mengambil data laporan magang/PKL dan laporan skripsi
+    dari database, lalu menyimpannya ke variabel global
+    `documents_magang` dan `documents_skripsi`.
+
+    Kriteria filter dokumen:
+        1. Hanya laporan yang sudah pernah diajukan (memiliki minimal
+           satu record di tabel verifikasi terkait).
+        2. Hanya laporan leaf node (tidak memiliki child/revisi turunan),
+           sehingga yang diambil adalah versi terbaru.
+
+    Returns:
+        tuple: (documents_magang, documents_skripsi) — masing-masing
+            berupa list of dict dengan key:
+            - 'id'    : ID laporan
+            - 'judul' : Judul laporan
+            - 'tipe'  : 'magang' atau 'skripsi'
+
+    Side Effects:
+        Mengubah variabel global `documents_magang` dan `documents_skripsi`.
     """
     global documents_magang, documents_skripsi
 
@@ -220,7 +270,25 @@ def load_documents_from_db():
 # ==================================================
 
 def normalize_text(text: str):
+    """
+    Menormalisasi teks dengan mengubah ke huruf kecil dan menerapkan
+    peta normalisasi kata tidak baku.
 
+    Proses normalisasi:
+        1. Konversi seluruh teks ke lowercase.
+        2. Mengganti kata-kata tidak baku/singkatan dengan bentuk bakunya
+           menggunakan NORMALIZATION_PATTERNS (regex yang sudah di-compile).
+
+    Args:
+        text (str): Teks mentah yang akan dinormalisasi.
+
+    Returns:
+        str: Teks yang sudah dinormalisasi (lowercase + kata baku).
+
+    Contoh:
+        >>> normalize_text("Analsis Sistem Infrmasi")
+        'analisis sistem informasi'
+    """
     text = str(text).lower()
 
     for pattern, replacement in NORMALIZATION_PATTERNS:
@@ -234,6 +302,24 @@ def normalize_text(text: str):
 _RE_NON_ALPHANUM = re.compile(r'[^a-z0-9\s]')
 
 def tokenize(text):
+    """
+    Memecah teks menjadi daftar token (kata) setelah normalisasi.
+
+    Proses:
+        1. Normalisasi teks (lowercase + peta normalisasi).
+        2. Menghapus semua karakter non-alfanumerik (tanda baca, simbol).
+        3. Memecah teks berdasarkan spasi.
+
+    Args:
+        text (str): Teks yang akan di-tokenisasi.
+
+    Returns:
+        list[str]: Daftar token berupa kata-kata dalam huruf kecil.
+
+    Contoh:
+        >>> tokenize("Analisis Sistem Informasi (Studi Kasus)")
+        ['analisis', 'sistem', 'informasi', 'studi', 'kasus']
+    """
     text = normalize_text(text)
 
     text = _RE_NON_ALPHANUM.sub(' ', text)
@@ -241,7 +327,25 @@ def tokenize(text):
     return text.split()
 
 def tokenize_and_stem(text):
-    """Tokenize, remove stopwords, and apply Indonesian stemming."""
+    """
+    Tokenisasi teks dengan penghapusan stopword dan stemming bahasa Indonesia.
+
+    Proses:
+        1. Tokenisasi teks menggunakan fungsi `tokenize()`.
+        2. Menghapus stopword bahasa Indonesia dan token berukuran ≤ 1 karakter.
+        3. Melakukan stemming pada setiap token yang tersisa menggunakan
+           Sastrawi stemmer (dengan caching).
+
+    Args:
+        text (str): Teks yang akan diproses.
+
+    Returns:
+        list[str]: Daftar token yang sudah di-stem, tanpa stopword.
+
+    Contoh:
+        >>> tokenize_and_stem("Implementasi Pembelajaran Mesin untuk Klasifikasi")
+        ['implementasi', 'ajar', 'mesin', 'klasifikasi']
+    """
     tokens = tokenize(text)
     result = []
     for t in tokens:
@@ -253,7 +357,24 @@ def tokenize_and_stem(text):
     return result
 
 def tokenize_remove_stopwords(text):
-    """Tokenize and remove stopwords (no stemming)."""
+    """
+    Tokenisasi teks dengan penghapusan stopword, tanpa stemming.
+
+    Berbeda dengan `tokenize_and_stem()`, fungsi ini mempertahankan
+    bentuk asli kata (tidak di-stem). Berguna ketika perlu pencocokan
+    kata secara eksak (exact match) tanpa mengubah bentuk kata.
+
+    Args:
+        text (str): Teks yang akan diproses.
+
+    Returns:
+        list[str]: Daftar token tanpa stopword dan tanpa token pendek (≤ 1 karakter),
+            dalam bentuk kata asli (tidak di-stem).
+
+    Contoh:
+        >>> tokenize_remove_stopwords("analisis dari sebuah sistem informasi")
+        ['analisis', 'sistem', 'informasi']
+    """
     tokens = tokenize(text)
     return [t for t in tokens if t not in STOPWORDS and len(t) > 1]
 
@@ -262,8 +383,25 @@ def tokenize_remove_stopwords(text):
 # ==================================================
 def expand_query(query):
     """
-    Expand query with synonyms to improve recall.
-    Returns the expanded query string.
+    Memperluas query pencarian dengan sinonim untuk meningkatkan recall.
+
+    Fungsi ini mencocokkan kata/frasa pada query dengan SYNONYM_MAP,
+    lalu menambahkan semua sinonim yang ditemukan ke akhir query.
+    Pencocokan dilakukan dalam dua tahap:
+        1. Frasa multi-kata (dicocokkan terlebih dahulu, diurutkan
+           dari yang terpanjang agar frasa lebih spesifik diprioritaskan).
+        2. Kata tunggal dari hasil tokenisasi query.
+
+    Args:
+        query (str): Query pencarian asli dari pengguna.
+
+    Returns:
+        str: Query yang sudah diperluas. Format: "<query asli> <sinonim1> <sinonim2> ...".
+            Jika tidak ada sinonim ditemukan, mengembalikan query asli tanpa perubahan.
+
+    Contoh:
+        >>> expand_query("machine learning")
+        'machine learning pembelajaran mesin ml'
     """
     query_lower = normalize_text(query)
     expansions = set()
@@ -290,7 +428,34 @@ def expand_query(query):
 # BUILD SEARCH INDEX
 # ==================================================
 def build_search_index(documents):
-    """Build BM25 index and SBERT embeddings for documents."""
+    """
+    Membangun indeks pencarian BM25 dan embedding SBERT untuk kumpulan dokumen.
+
+    Proses:
+        1. Untuk setiap dokumen, melakukan tokenisasi + stemming pada judul.
+        2. Menyimpan versi bersih (judul_clean) dan versi stem (judul_stemmed)
+           ke dalam setiap dict dokumen sebagai field tambahan.
+        3. Membangun indeks BM25 dari token yang sudah di-stem.
+        4. Menghasilkan embedding SBERT dari judul asli (model menangani
+           semantik secara internal).
+
+    Args:
+        documents (list[dict]): Daftar dokumen, setiap dokumen berupa dict
+            dengan minimal key 'judul'.
+
+    Returns:
+        tuple: (bm25, doc_embeddings, tokenized_docs)
+            - bm25 (BM25Okapi | None): Objek indeks BM25, atau None jika
+              dokumen kosong.
+            - doc_embeddings (Tensor | None): Tensor embedding SBERT untuk
+              seluruh dokumen, atau None jika dokumen kosong.
+            - tokenized_docs (list[list[str]]): Daftar token per dokumen
+              (sudah di-stem), digunakan untuk lookup cepat.
+
+    Side Effects:
+        Menambahkan key 'judul_clean' dan 'judul_stemmed' pada setiap
+        dict dokumen di parameter `documents`.
+    """
     if not documents:
         return None, None, []
 
@@ -328,7 +493,21 @@ def build_search_index(documents):
 # AHO-CORASICK (Word-boundary aware)
 # ==================================================
 def build_aho_automaton(keywords):
-    """Build Aho-Corasick automaton from keyword list."""
+    """
+    Membangun automaton Aho-Corasick dari daftar keyword.
+
+    Aho-Corasick adalah algoritma pencocokan multi-pola yang efisien.
+    Automaton yang dihasilkan dapat mencari semua keyword secara simultan
+    dalam satu kali traversal teks (kompleksitas O(n + m + z), di mana
+    n = panjang teks, m = total panjang keyword, z = jumlah match).
+
+    Args:
+        keywords (list[str]): Daftar kata kunci yang akan dicari.
+
+    Returns:
+        ahocorasick.Automaton: Automaton yang siap digunakan untuk
+            pencocokan multi-pola.
+    """
     A = ahocorasick.Automaton()
     for i, w in enumerate(keywords):
         A.add_word(w, (i, w))
@@ -337,12 +516,31 @@ def build_aho_automaton(keywords):
 
 def aho_score_documents(query, documents):
     """
-    Score documents using Aho-Corasick multi-pattern matching.
-    
-    Improvements over original:
-    - Uses stemmed keywords for better root-word matching
-    - Word-boundary checking to prevent partial matches
-    - Scores incorporate unique keyword coverage ratio
+    Menghitung skor relevansi dokumen menggunakan pencocokan multi-pola Aho-Corasick.
+
+    Fungsi ini mencari kemunculan keyword query (baik bentuk asli maupun
+    bentuk stem) di dalam judul dokumen, dengan pengecekan batas kata
+    (word boundary) untuk menghindari partial match.
+
+    Perbaikan dari versi awal:
+        - Menggunakan keyword yang sudah di-stem untuk pencocokan kata dasar.
+        - Pengecekan word boundary agar tidak mencocokkan sebagian kata.
+        - Skor menggabungkan rasio cakupan keyword unik (coverage) dan
+          kepadatan kemunculan (density).
+
+    Rumus skor per dokumen:
+        score = 0.7 × coverage + 0.3 × density
+        - coverage: fraksi keyword unik yang ditemukan / total keyword
+        - density: total hit / total keyword, di-cap pada 1.0
+
+    Args:
+        query (str): Query pencarian dari pengguna.
+        documents (list[dict]): Daftar dokumen yang memiliki key
+            'judul_clean' dan 'judul_stemmed'.
+
+    Returns:
+        np.ndarray: Array skor Aho-Corasick untuk setiap dokumen
+            (nilai antara 0.0 – 1.0).
     """
     if not documents:
         return np.array([])
@@ -397,8 +595,19 @@ def aho_score_documents(query, documents):
 # ==================================================
 def normalize_scores(scores):
     """
-    Robust min-max normalization.
-    Handles edge cases: empty arrays, all-zero, single element.
+    Melakukan normalisasi min-max yang robust pada array skor.
+
+    Menangani edge case:
+        - Array kosong: dikembalikan apa adanya.
+        - Semua nilai nol: dikembalikan array nol.
+        - Semua nilai sama (non-nol): dikembalikan array berisi 0.5.
+        - Normal: skor dinormalisasi ke rentang [0.0, 1.0].
+
+    Args:
+        scores (np.ndarray): Array skor mentah yang akan dinormalisasi.
+
+    Returns:
+        np.ndarray: Array skor yang sudah dinormalisasi ke rentang [0, 1].
     """
     if len(scores) == 0:
         return scores
@@ -420,7 +629,24 @@ def normalize_scores(scores):
 # RELOAD DOCUMENTS (Called on startup and when needed)
 # ==================================================
 def reload_documents():
-    """Reload documents from database and rebuild search indices."""
+    """
+    Memuat ulang seluruh dokumen dari database dan membangun ulang
+    semua indeks pencarian.
+
+    Fungsi ini dipanggil saat:
+        - Inisialisasi modul (module load).
+        - Endpoint /reload pada API dipanggil (misal setelah data berubah).
+
+    Proses:
+        1. Mengambil data dokumen magang dan skripsi dari database.
+        2. Membangun indeks BM25 + embedding SBERT untuk masing-masing kategori.
+        3. Menyimpan hasil ke variabel global yang digunakan oleh fungsi pencarian.
+
+    Side Effects:
+        Mengubah variabel global: documents_magang, documents_skripsi,
+        bm25_magang, bm25_skripsi, doc_embeddings_magang,
+        doc_embeddings_skripsi, _tokenized_magang, _tokenized_skripsi.
+    """
     global documents_magang, documents_skripsi
     global bm25_magang, bm25_skripsi
     global doc_embeddings_magang, doc_embeddings_skripsi
@@ -442,14 +668,40 @@ def reload_documents():
 # ==================================================
 def rank_documents(query, category="magang", mode="hybrid"):
     """
-    Rank documents by relevance to query.
-    
-    Hybrid weights (tuned for Indonesian academic titles):
-      - SBERT  : 0.45 — best at understanding meaning & paraphrases
-      - BM25   : 0.35 — strong lexical/keyword match with stemming
-      - Aho-C  : 0.20 — exact keyword presence bonus
-    
-    Returns: (results_list, raw_component_scores_dict)
+    Meranking dokumen berdasarkan relevansi terhadap query pencarian.
+
+    Menggabungkan tiga metode scoring secara hybrid:
+        - SBERT  (bobot 0.60): Pemahaman semantik dan parafrase menggunakan
+          sentence embeddings multilingual.
+        - BM25   (bobot 0.30): Pencocokan leksikal/keyword berbasis
+          statistik term frequency dengan stemming.
+        - Aho-Corasick (bobot 0.10): Bonus kehadiran keyword eksak
+          menggunakan multi-pattern matching.
+
+    Alur proses:
+        1. Memilih dataset dan indeks sesuai kategori (magang/skripsi).
+        2. Memperluas query dengan sinonim (expand_query).
+        3. Menghitung skor BM25 dari token yang sudah di-stem.
+        4. Menghitung skor SBERT dari cosine similarity embedding.
+        5. Menghitung skor Aho-Corasick dari pencocokan keyword.
+        6. Menggabungkan ketiga skor (hybrid) atau menggunakan satu metode
+           saja sesuai parameter `mode`.
+        7. Mengurutkan dokumen dari skor tertinggi ke terendah.
+
+    Args:
+        query (str): Query pencarian dari pengguna.
+        category (str): Kategori dokumen — 'magang' atau 'skripsi'.
+            Default: 'magang'.
+        mode (str): Mode scoring — 'hybrid', 'bm25', 'sbert', atau 'aho'.
+            Default: 'hybrid'.
+
+    Returns:
+        tuple: (sorted_indices, component_scores)
+            - sorted_indices (list[int]): Indeks dokumen yang sudah diurutkan
+              berdasarkan skor dari tinggi ke rendah.
+            - component_scores (dict): Dictionary berisi array skor per
+              komponen ('bm25', 'sbert', 'aho_corasick', 'final').
+            Mengembalikan ([], {}) jika tidak ada dokumen atau indeks belum siap.
     """
     # Select appropriate data based on category
     if category == "magang":
@@ -526,17 +778,43 @@ def rank_documents(query, category="magang", mode="hybrid"):
 # ==================================================
 def search(query, category="magang", mode="hybrid", limit=20, min_score=0.3):
     """
-    Main search function.
+    Fungsi utama pencarian dokumen laporan magang/skripsi.
+
+    Melakukan pencarian hybrid (atau single-mode) lalu memfilter
+    dan memformat hasilnya berdasarkan threshold skor minimum
+    dan batas jumlah hasil.
+
+    Alur proses:
+        1. Memilih dataset sesuai kategori.
+        2. Memanggil `rank_documents()` untuk mendapatkan ranking.
+        3. Memfilter dokumen dengan skor ≥ min_score.
+        4. Membatasi jumlah hasil sesuai parameter `limit`.
+        5. Mengembalikan list hasil lengkap dengan detail skor per komponen.
 
     Args:
-        query: Search query string
-        category: "magang" or "skripsi"
-        mode: "hybrid", "bm25", "sbert", or "aho"
-        limit: Maximum number of results to return
-        min_score: Minimum score threshold (default: 0.3)
+        query (str): Query pencarian dari pengguna.
+        category (str): Kategori dokumen — 'magang' atau 'skripsi'.
+            Default: 'magang'.
+        mode (str): Mode scoring — 'hybrid', 'bm25', 'sbert', atau 'aho'.
+            Default: 'hybrid'.
+        limit (int): Jumlah maksimum hasil yang dikembalikan.
+            Default: 20.
+        min_score (float): Threshold skor minimum. Dokumen dengan skor
+            di bawah nilai ini tidak disertakan dalam hasil.
+            Default: 0.3.
 
     Returns:
-        List of search results with scores >= min_score
+        list[dict]: Daftar hasil pencarian, setiap item berupa dict:
+            - 'id'    (int): ID laporan.
+            - 'judul' (str): Judul laporan.
+            - 'tipe'  (str): Tipe laporan ('magang' / 'skripsi').
+            - 'score' (float): Skor akhir (hybrid/single), 4 desimal.
+            - 'detail_scores' (dict): Skor per komponen
+                - 'bm25' (float)
+                - 'sbert' (float)
+                - 'aho_corasick' (float)
+            Mengembalikan list kosong jika tidak ada dokumen atau
+            tidak ada hasil yang memenuhi threshold.
     """
     if category == "magang":
         documents = documents_magang
